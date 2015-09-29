@@ -41,6 +41,7 @@ public class BookController {
 		modelAndView.addObject("books", books );
 		return modelAndView;
 	}
+
 	
 	@RequestMapping(value="/read", method=RequestMethod.GET)
 	@ResponseBody
