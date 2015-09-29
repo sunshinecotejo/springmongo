@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+        ">
+
+
+	
+
+    <!-- Configure the Mongo Server -->
+    <mongo:mongo id="mongo" host="localhost" port="27017"/>
+    
+    <mongo:db-factory dbname="library" mongo-ref="mongo" id="mongoDbFactory" />
+ 
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+	    <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+	 
+	<bean id="bookRepository" class="com.fpt.springmongo.repositories.BookRepositoryImpl">
+	   <constructor-arg name="mongoOps" ref="mongoTemplate"/>
+	</bean>
+    
+   <!--  <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+    <constructor-arg ref="mongo"/>
+    <constructor-arg name="databaseName" value="library"/>
+  </bean> -->
+  
+    
+    <mongo:repositories base-package="com.fpt.springmongo.repositories"></mongo:repositories>
+    
+        
+</beans>
